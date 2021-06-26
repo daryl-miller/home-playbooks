@@ -1,0 +1,16 @@
+- hosts: linux
+  become: true
+  become_user: root
+  tasks:
+    - name: Install unzip
+      apt: 
+       name: unzip
+       state: latest
+       update_cache: yes
+    - name: Install jq
+      apt: 
+       name: jq
+       state: latest
+       update_cache: yes
+- name: install aws cli
+  import_playbook: awscli.yml
