@@ -1,0 +1,17 @@
+- name: "Install aws cli"
+  hosts: linux
+  become: true
+  become_user: root
+  tasks:
+    - name: Download foo.conf
+      get_url:
+        url: https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip
+        dest: /tmp/awscliv2.zip
+        mode: '0400'
+    - name: Extract aws cli into /tmp/awscli
+      ansible.builtin.unarchive:
+        src: /tmp/awscliv2.zip
+        dest: /tmp
+    - name: install aws cli
+      ansible.builtin.script:
+        cmd: /tmp/aws/install --update
