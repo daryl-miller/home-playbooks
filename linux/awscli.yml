@@ -3,7 +3,7 @@
   become: true
   become_user: root
   tasks:
-    - name: Download foo.conf
+    - name: Download aws cli
       get_url:
         url: https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip
         dest: /tmp/awscliv2.zip
