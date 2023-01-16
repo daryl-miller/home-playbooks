@@ -1,0 +1,8 @@
+- hosts: all
+  roles:
+    - common
+
+# - hosts: ubuntu_server_1
+#   roles:
+#     - samba
+

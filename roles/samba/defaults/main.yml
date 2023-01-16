@@ -1,0 +1,11 @@
+---
+ubuntu_samba_packages:
+  - samba
+  - samba-common
+workgroup: WORKGROUP
+private_share_name: media
+private_share_path: /mnt/media
+samba_group_name: smbgrp
+samba_users:
+  - name: 'media'
+    smbpasswd: 'apassword'

@@ -1,0 +1,13 @@
+---
+- name: Set a hostname
+  hostname:
+    name: "{{ inventory_hostname | replace(\"_\", \"-\") }}"
+  become: yes
+  become_method: sudo
+
+- name: Change the host name
+  become: yes
+  replace:
+    path: /etc/hosts
+    regexp: '^(127\.0\.[0|1]\.1).*'
+    replace: '\1 localhost {{ inventory_hostname | replace("_", "-") }}'

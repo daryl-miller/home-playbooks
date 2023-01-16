@@ -1,5 +1,0 @@
-- hosts: win
-- name: Install and Update windows apps
-  import_playbook: apps.yml
-- name: Update windows
-  import_playbook: windows_updates.yml

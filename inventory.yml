@@ -1,0 +1,17 @@
+all:
+  children:
+    masters:
+      hosts:
+          rpi_master_1:
+            ansible_host: 192.168.1.85
+    nodes:
+      hosts:
+        ubuntu_server_1:
+          ansible_host: 192.168.1.181
+        rpi_node_1: 
+          ansible_host: 192.168.1.41
+        rpi_node_2: 
+          ansible_host: 192.168.1.52
+    media_share: 
+      hosts:
+        ubuntu_server_1:

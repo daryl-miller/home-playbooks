@@ -1,0 +1,42 @@
+---
+- name: Install the Samba and additional packages
+  become: yes
+  apt:
+    name: "{{ item }}"
+    update_cache: yes
+    state: present
+  with_items: "{{ ubuntu_samba_packages }}"
+
+- name: Copy the Customize smb.conf file
+  become: yes
+  template: 
+    src: etc_samba_smb.conf.j2
+    dest: /etc/samba/smb.conf
+    backup: yes
+  notify:
+    - Restart Samba
+
+- name: Create Samba users restricted group
+  become: yes
+  group:
+    name: "{{ samba_group_name }}"
+    state: present
+
+- name: Create Samba Password for User(s)
+  shell: "(echo {{ item.smbpasswd }}; echo {{ item.smbpasswd }}) | smbpasswd -s -a {{ item.name }}"
+  with_items: "{{ samba_users }}"
+
+- name: Creating user sambda user "{{ item.name }}"
+  become: yes
+  user: 
+    name: "{{ item.name }}"
+    password: "{{ item.smbpasswd | password_hash('sha512') }}"
+    groups: "{{ samba_group_name }}"  
+    append: yes
+  with_items: "{{ samba_users }}"
+
+- name: "Check that {{ private_share_path }} exist"
+  become: yes
+  stat:
+    path: "{{ private_share_path }}"
+  register: private_dir_exists
