@@ -1,0 +1,29 @@
+---
+- name: Ensure procps is installed.
+  package:
+    name: "procps"
+    state: present
+
+- name: enable briding in kernel
+  modprobe:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - overlay
+    - br_netfilter
+
+- name: Add Kubernetes apt preferences file to pin a version.
+  template:
+    src: modules-loads-k8s.conf.j2
+    dest: /etc/modules-load.d/k8s.conf
+    mode: 0644
+
+- name: Let iptables see bridged traffic
+  sysctl:
+    name: "{{ item }}"
+    value: '1'
+    state: present
+  loop:
+    - net.bridge.bridge-nf-call-iptables
+    - net.bridge.bridge-nf-call-ip6tables
+    - net.ipv4.ip_forward

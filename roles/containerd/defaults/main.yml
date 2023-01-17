@@ -1,0 +1,15 @@
+---
+
+docker_apt_release_channel: stable
+
+docker_distribution: "{{ ansible_lsb.id }}"
+
+containerd_config_default_write: true
+containerd_config_cgroup_driver_systemd: true
+
+docker_apt_arch: '{{ (ansible_architecture == "armv7l") | ternary("armhf", "amd64") }}'
+docker_apt_repository: "deb [arch={{ docker_apt_arch }}] https://download.docker.com/linux/{{ docker_distribution | lower }} {{ ansible_distribution_release }} {{ docker_apt_release_channel }}"
+docker_apt_gpg_key: https://download.docker.com/linux/{{ docker_distribution | lower }}/gpg
+
+containerd_package: containerd.io
+containerd_package_state: present

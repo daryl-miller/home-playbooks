@@ -1,17 +1,21 @@
 all:
   children:
     masters:
+      vars: 
+        kubernetes_role: control_plane
       hosts:
-          rpi_master_1:
-            ansible_host: 192.168.1.85
-    nodes:
-      hosts:
-        ubuntu_server_1:
+        ubuntu_master_1:
           ansible_host: 192.168.1.181
+    nodes:
+      vars: 
+        kubernetes_role: node
+      hosts:
         rpi_node_1: 
           ansible_host: 192.168.1.41
         rpi_node_2: 
           ansible_host: 192.168.1.52
+        rpi_node_3:
+            ansible_host: 192.168.1.159
     media_share: 
       hosts:
-        ubuntu_server_1:
+        ubuntu_master_1:

@@ -2,7 +2,12 @@
   roles:
     - common
 
-# - hosts: ubuntu_server_1
-#   roles:
-#     - samba
+- hosts: ubuntu_server_1
+  roles:
+    - samba
 
+- hosts: masters nodes
+  become: yes  
+  roles:
+    - containerd
+    - k8
